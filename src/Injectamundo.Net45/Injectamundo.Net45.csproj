@@ -40,6 +40,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Container.cs" />
+    <Compile Include="Container.Registration.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>Container.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Container.Resolution.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>Container.cs</DependentUpon>
+    </Compile>
     <Compile Include="Contracts\ILifeStyle.cs" />
     <Compile Include="Models\Lifestyles\TransientLifeStyle.cs" />
     <Compile Include="Models\Registration.cs" />
