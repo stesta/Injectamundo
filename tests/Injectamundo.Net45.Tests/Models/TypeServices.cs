@@ -13,6 +13,18 @@ namespace Injectamundo.Net45.Tests
 
     public class AlphaService : ITypeService
     {
+        private string _constructor = string.Empty;
+
+        public AlphaService()
+        {
+            _constructor = "AlphaService()";
+        }
+
+        public AlphaService(BetaService dependency)
+        {
+            _constructor = string.Format("AlphaService({0})", dependency.ToString());
+        }
+
         public string Name
         {
             get
@@ -20,16 +32,38 @@ namespace Injectamundo.Net45.Tests
                 return "AlphaService";
             }
         }
+
+        public override string ToString()
+        {
+            return _constructor;
+        }
     }
 
     public class BetaService : ITypeService
     {
+        private string _constructor = string.Empty;
+
+        public BetaService()
+        {
+            _constructor = "BetaService()";
+        }
+
+        public BetaService(string constructorUsed)
+        {
+            _constructor = string.Format("BetaService({0})", constructorUsed);
+        }
+
         public string Name
         {
             get
             {
                 return "BetaService";
             }
+        }
+
+        public override string ToString()
+        {
+            return _constructor;
         }
     }
 }

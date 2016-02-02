@@ -48,6 +48,7 @@
       <SubType>Code</SubType>
       <DependentUpon>Container.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\IEnumerableExtensions.cs" />
     <Compile Include="Helpers\TypeExtensions.cs" />
     <Compile Include="Models\Lifestyles\Lifestyle.cs" />
     <Compile Include="Models\InstanceProducer.cs" />

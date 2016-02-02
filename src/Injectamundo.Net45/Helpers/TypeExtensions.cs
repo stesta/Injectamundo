@@ -9,9 +9,10 @@ namespace Injectamundo
 {
     public static class TypeExtensions
     {
-        public static bool IsConcrete(this Type type)
+        public static bool IsValidImplementationType(this Type type)
         {
-            return type.IsClass && !type.IsAbstract && !type.IsInterface;
+            var isPrimitive = type.IsPrimitive || type.IsValueType || (type == typeof(string));
+            return type.IsClass && !type.IsAbstract && !type.IsInterface && !isPrimitive;
         }
     }
 }

@@ -13,18 +13,32 @@ namespace Injectamundo
 
         public object Produce(Container container, Registration registration)
         {
-            Type resolveType = null;
-            
-            try
+            // try to product via the specific producer
+            if (registration.ImplementationProducer != null)
             {
-                resolveType = registration.ImplementationType;
-            }
-            catch
-            {
-                throw new Exception(string.Format("Could not resolve type {0}", registration.ServiceType.FullName));
+                return registration.ImplementationProducer.Invoke();
             }
 
-            var constructor = GetConstructor(container, resolveType);
+            // otherwise always try and resolve as many parameters as possible
+            Type resolveType = registration.ImplementationType;
+            var constructors = resolveType.GetConstructors().OrderByDescending(c => c.GetParameters().Count());
+            foreach (var constructor in constructors)
+            {
+                try
+                {
+                    return Produce(container, registration, constructor);
+                }
+                catch 
+                {
+                }
+            }
+
+            // if we make it here for some reason it's an error
+            throw new Exception(string.Format("Could not resolve type {0}", registration.ServiceType.FullName));
+        }
+
+        private object Produce(Container container, Registration registration, ConstructorInfo constructor)
+        {
             var dependencies = constructor.GetParameters();
             var cache = GetCachedLifestyle(registration.Lifestyle);
 
@@ -51,17 +65,6 @@ namespace Injectamundo
             }
 
             return lifestyleCache.SingleOrDefault(cache => cache.GetType() == lifestyle.GetType());
-        }
-
-        private ConstructorInfo GetConstructor(Container container, Type type)
-        {
-            var constructors = type.GetConstructors();
-
-            // todo: resolve constructor to use in a better way
-            // todo: check for cyclic dependencies
-            var constructor = constructors.First();
-
-            return constructor;
         }
     }
 }

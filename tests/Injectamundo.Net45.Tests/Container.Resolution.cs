@@ -58,5 +58,45 @@ namespace Injectamundo.Net45.Tests
                 var instance = container.GetInstance<ITypeService>();
             });
         }
+
+        [Test]
+        public void resolve_a_type_using_the_constructor_with_the_most_dependencies()
+        {
+            // Arrange
+            var container = new Container();
+            container.Register<ITypeService, AlphaService>();
+
+            // Act
+            var instance = container.GetInstance<ITypeService>();
+
+            Assert.AreEqual("AlphaService(BetaService())", instance.ToString());
+        }
+
+        [Test]
+        public void resolve_a_type_using_a_manually_specified_instance_producer()
+        {
+            // Arrange
+            var container = new Container();
+            container.Register<ITypeService, BetaService>(() => new BetaService("Manually Produced"));
+
+            // Act
+            var instance = container.GetInstance<ITypeService>();
+
+            Assert.AreEqual("BetaService(Manually Produced)", instance.ToString());
+        }
+
+        [Test]
+        public void resolve_a_type_with_dependencies_relying_on_a_manually_specified_instance_producer()
+        {
+            // Arrange
+            var container = new Container();
+            container.Register<ITypeService, AlphaService>();
+            container.Register<BetaService, BetaService>(() => new BetaService("Manually Produced"));
+
+            // Act
+            var instance = container.GetInstance<ITypeService>();
+
+            Assert.AreEqual("AlphaService(BetaService(Manually Produced))", instance.ToString());
+        }
     }
 }

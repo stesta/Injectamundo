@@ -15,8 +15,17 @@ namespace Injectamundo
             Lifestyle = lifestyle ?? Lifestyle.Transient;
         }
 
+        public Registration(Type serviceType, Func<object> implementationProducer, Lifestyle lifestyle = null)
+        {
+            ServiceType = serviceType;
+            ImplementationProducer = implementationProducer;
+            Lifestyle = lifestyle ?? Lifestyle.Transient;
+        }
+
         public Type ServiceType { get; private set; }
         public Type ImplementationType { get; private set; }
         public Lifestyle Lifestyle { get; private set; }
+
+        public Func<object> ImplementationProducer = null;
     }
 }

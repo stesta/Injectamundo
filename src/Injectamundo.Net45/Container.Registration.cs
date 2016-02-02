@@ -25,11 +25,28 @@ namespace Injectamundo
             }
         }
 
+        public void Register<TService, TImplementation>(Func<TImplementation> instanceProducer, Lifestyle lifestyle = null)
+            where TImplementation : class, TService
+            where TService : class
+        {
+            if (containerClosed)
+            {
+                throw new Exception("The container is closed for registration.");
+            }
+
+            var registrationAlreadyExists = registrations.Exists(r => r.ServiceType == typeof(TService));
+            if (!registrationAlreadyExists)
+            {
+                var registration = new Registration(typeof(TService), instanceProducer, lifestyle);
+                registrations.Add(registration);
+            }
+        }
+
         internal Registration GetRegistration(Type serviceType)
         {
             var registration = registrations.SingleOrDefault(c => c.ServiceType == serviceType);
 
-            if (registration == null && serviceType.IsConcrete())
+            if (registration == null && serviceType.IsValidImplementationType())
             {
                 registration = new Registration(serviceType, serviceType);
             }
