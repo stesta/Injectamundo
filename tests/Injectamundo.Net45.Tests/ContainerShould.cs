@@ -1,12 +1,12 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Injectamundo.Net45.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class ContainerShould
     {
-        [TestMethod]
+        [Test]
         public void resolve_the_implementation_for_a_registered_service()
         {
             // Arrange
@@ -16,7 +16,32 @@ namespace Injectamundo.Net45.Tests
             // Act
             var instance = container.GetInstance<ITypeService>();
 
-            Assert.IsInstanceOfType(instance, typeof(AlphaService));
+            Assert.IsInstanceOf<AlphaService>(instance);
+        }
+
+        [Test]
+        public void resolve_a_concrete_type_even_if_it_is_not_registered()
+        {
+            // Arrange
+            var container = new Container();
+
+            // Act
+            var instance = container.GetInstance<AlphaService>();
+
+            Assert.IsInstanceOf<AlphaService>(instance);
+        }
+
+        [Test]
+        public void throw_an_error_if_a_requested_type_cannot_be_resolved()
+        {
+            // Arrange 
+            var container = new Container();
+
+            // Act 
+            Assert.Throws<Exception>(() => 
+            {
+                var instance = container.GetInstance<ITypeService>();
+            });
         }
     }
 

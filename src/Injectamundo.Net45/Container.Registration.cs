@@ -12,18 +12,32 @@ namespace Injectamundo
             where TImplementation : class, TService
             where TService : class
         {
-            var registration = new Registration(typeof(TService), typeof(TImplementation), new TransientLifeStyle());
-            // todo: check if a registration already exists
-            registrations.Add(registration);
+            if (containerClosed)
+            {
+                throw new Exception("The container is closed for registration.");
+            }
+
+            var registrationAlreadyExists = registrations.Exists(r => r.ServiceType == typeof(TService));
+            if (!registrationAlreadyExists)
+            {
+                var registration = new Registration(typeof(TService), typeof(TImplementation), new TransientLifeStyle());
+                registrations.Add(registration);
+            }
         }
 
         internal Registration GetRegistration(Type serviceType)
         {
             var registration = registrations.SingleOrDefault(c => c.ServiceType == serviceType);
 
-            // todo: if registration is null and type is concrete return registration for the concrete type
-            //if (registrations == null && registration is concrete type )
-            // return new Registration of Concrete Type
+            if (registration == null && serviceType.IsConcrete())
+            {
+                registration = new Registration(serviceType, serviceType);
+            }
+
+            if (registration == null)
+            {
+                throw new Exception("Could not resolve type.");
+            }
 
             return registration;
         }
