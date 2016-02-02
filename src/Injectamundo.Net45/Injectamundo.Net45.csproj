@@ -48,9 +48,12 @@
       <SubType>Code</SubType>
       <DependentUpon>Container.cs</DependentUpon>
     </Compile>
-    <Compile Include="Contracts\ILifeStyle.cs" />
     <Compile Include="Helpers\TypeExtensions.cs" />
-    <Compile Include="Models\Lifestyles\TransientLifeStyle.cs" />
+    <Compile Include="Models\Lifestyles\Lifestyle.cs" />
+    <Compile Include="Models\InstanceProducer.cs" />
+    <Compile Include="Models\Lifestyles\LifestyleComparer.cs" />
+    <Compile Include="Models\Lifestyles\SingletonLifestyle.cs" />
+    <Compile Include="Models\Lifestyles\TransientLifestyle.cs" />
     <Compile Include="Models\Registration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requires.cs" />

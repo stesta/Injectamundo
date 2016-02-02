@@ -8,7 +8,7 @@ namespace Injectamundo
 {
     partial class Container
     {
-        public void Register<TService, TImplementation>()
+        public void Register<TService, TImplementation>(Lifestyle lifestyle = null)
             where TImplementation : class, TService
             where TService : class
         {
@@ -20,7 +20,7 @@ namespace Injectamundo
             var registrationAlreadyExists = registrations.Exists(r => r.ServiceType == typeof(TService));
             if (!registrationAlreadyExists)
             {
-                var registration = new Registration(typeof(TService), typeof(TImplementation), new TransientLifeStyle());
+                var registration = new Registration(typeof(TService), typeof(TImplementation), lifestyle);
                 registrations.Add(registration);
             }
         }

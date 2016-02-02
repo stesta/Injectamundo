@@ -11,10 +11,8 @@ namespace Injectamundo
         public TService GetInstance<TService>()
             where TService : class
         {
-            Registration registration = GetRegistration(typeof(TService));
-
-            var lifestyle = registration.Lifestyle;
-            var instance = lifestyle.ProduceInstance(this, registration);
+            var registration = GetRegistration(typeof(TService));
+            var instance = instanceProducer.Produce(this, registration);
 
             return instance as TService;
         }

@@ -8,15 +8,15 @@ namespace Injectamundo
 {
     public class Registration
     {
-        public Registration(Type serviceType, Type implementationType, ILifeStyle lifestyle = null)
+        public Registration(Type serviceType, Type implementationType, Lifestyle lifestyle = null)
         {
             ServiceType = serviceType;
             ImplementationType = implementationType;
-            Lifestyle = lifestyle ?? new TransientLifeStyle();
+            Lifestyle = lifestyle ?? Lifestyle.Transient;
         }
 
         public Type ServiceType { get; private set; }
         public Type ImplementationType { get; private set; }
-        public ILifeStyle Lifestyle { get; private set; }
+        public Lifestyle Lifestyle { get; private set; }
     }
 }

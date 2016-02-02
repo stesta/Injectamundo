@@ -4,10 +4,10 @@ using NUnit.Framework;
 namespace Injectamundo.Net45.Tests
 {
     [TestFixture]
-    public class ContainerShould
+    public class ContainerResolution
     {
         [Test]
-        public void resolve_the_implementation_for_a_registered_service()
+        public void resolve_an_implementation_for_a_registered_service()
         {
             // Arrange
             var container = new Container();
@@ -17,6 +17,21 @@ namespace Injectamundo.Net45.Tests
             var instance = container.GetInstance<ITypeService>();
 
             Assert.IsInstanceOf<AlphaService>(instance);
+        }
+
+        [Test]
+        public void make_sure_only_instance_of_each_lifestyle_type_gets_cached()
+        {
+            // Arrange
+            var container = new Container();
+            container.Register<AlphaService, AlphaService>();
+            container.Register<BetaService, BetaService>();
+
+            // Act
+            var instanceAlpha = container.GetInstance<AlphaService>();
+            var instanceBeta = container.GetInstance<BetaService>();
+
+            Assert.IsTrue(container.instanceProducer.lifestyleCache.Count == 1);
         }
 
         [Test]
@@ -42,33 +57,6 @@ namespace Injectamundo.Net45.Tests
             {
                 var instance = container.GetInstance<ITypeService>();
             });
-        }
-    }
-
-    public interface ITypeService
-    {
-        string Name { get; }
-    }
-
-    public class AlphaService : ITypeService
-    {
-        public string Name
-        {
-            get
-            {
-                return "AlphaService";
-            }
-        }
-    }
-
-    public class BravoService : ITypeService
-    {
-        public string Name
-        {
-            get
-            {
-                return "BravoService";
-            }
         }
     }
 }

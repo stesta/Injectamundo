@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace Injectamundo
 {
-    public interface ILifeStyle
+    public class Requires
     {
-        string Name { get; }
-        object ProduceInstance(Container container, Registration registration);
     }
 }

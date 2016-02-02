@@ -8,8 +8,9 @@ namespace Injectamundo
 {
     public partial class Container
     {
-        private List<Registration> registrations = new List<Registration>();
-        private bool containerClosed = false;
+        internal List<Registration> registrations = new List<Registration>();
+        internal InstanceProducer instanceProducer = new InstanceProducer();
+        internal bool containerClosed = false;
 
         public Container()
         {

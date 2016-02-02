@@ -54,8 +54,11 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="ContainerShould.cs" />
+    <Compile Include="Container.Resolution.cs" />
+    <Compile Include="Models\TypeServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SingletonLifestyle.cs" />
+    <Compile Include="TransientLifestyle.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Injectamundo.Net45\Injectamundo.Net45.csproj">
