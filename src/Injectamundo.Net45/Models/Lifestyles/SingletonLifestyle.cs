@@ -10,9 +10,8 @@ namespace Injectamundo
     {
         private Dictionary<Type, object> cache = new Dictionary<Type, object>();
 
-        public override string Name
+        public SingletonLifestyle() : base("Singleton")
         {
-            get { return "Singleton"; }
         }
 
         public override object GetInstance(System.Reflection.ConstructorInfo constructor, object[] parameters = null)

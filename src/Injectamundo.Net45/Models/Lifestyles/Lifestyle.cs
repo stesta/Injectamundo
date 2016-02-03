@@ -9,7 +9,12 @@ namespace Injectamundo
 {
     public abstract class Lifestyle
     {
-        public abstract string Name { get; }
+        public Lifestyle(string name)
+        {
+            Name = name;
+        }
+
+        public string Name { get; private set; }
 
         public abstract object GetInstance(ConstructorInfo constructor, object[] parameters = null);
 

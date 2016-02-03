@@ -8,6 +8,19 @@ namespace Injectamundo
 {
     partial class Container
     {
+        public void Register<TImplementation>(Lifestyle lifestyle = null)
+            where TImplementation : class
+        {
+            Register<TImplementation, TImplementation>(lifestyle);
+        }
+
+        public void RegisterSingle<TService, TImplementation>()
+            where TImplementation : class, TService
+            where TService : class
+        {
+            Register<TService, TImplementation>(Lifestyle.Singleton);
+        }
+
         public void Register<TService, TImplementation>(Lifestyle lifestyle = null)
             where TImplementation : class, TService
             where TService : class
@@ -23,6 +36,12 @@ namespace Injectamundo
                 var registration = new Registration(typeof(TService), typeof(TImplementation), lifestyle);
                 registrations.Add(registration);
             }
+        }
+        
+        public void Register<TImplementation>(Func<TImplementation> instanceProducer, Lifestyle lifestyle = null)
+            where TImplementation : class
+        {
+            Register<TImplementation, TImplementation>(instanceProducer, lifestyle);
         }
 
         public void Register<TService, TImplementation>(Func<TImplementation> instanceProducer, Lifestyle lifestyle = null)

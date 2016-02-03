@@ -9,12 +9,8 @@ namespace Injectamundo
 {
     public class TransientLifestyle : Lifestyle
     {
-        public override string Name
+        public TransientLifestyle() : base("Transient")
         {
-            get
-            {
-                return "Transient";
-            }
         }
 
         public override object GetInstance(ConstructorInfo constructor, object[] parameters = null)
