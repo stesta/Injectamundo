@@ -24,8 +24,6 @@ namespace Injectamundo.Net45.Tests
         {
             // Arrange
             var container = new Container();
-            container.Register<AlphaService, AlphaService>();
-            container.Register<BetaService, BetaService>();
 
             // Act
             var instanceAlpha = container.GetInstance<AlphaService>();
@@ -91,7 +89,7 @@ namespace Injectamundo.Net45.Tests
             // Arrange
             var container = new Container();
             container.Register<ITypeService, AlphaService>();
-            container.Register<BetaService, BetaService>(() => new BetaService("Manually Produced"));
+            container.Register(() => new BetaService("Manually Produced"));
 
             // Act
             var instance = container.GetInstance<ITypeService>();

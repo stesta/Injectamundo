@@ -14,6 +14,20 @@ namespace Injectamundo
         {
         }
 
+        public override object GetInstance(Func<object> instanceProducer)
+        {
+            var type = instanceProducer.Target.GetType();
+            if (cache.ContainsKey(type))
+            {
+                return cache[type];
+            }
+
+            var instance = instanceProducer.Invoke();
+            cache.Add(type, instance);
+
+            return instance;
+        }
+
         public override object GetInstance(System.Reflection.ConstructorInfo constructor, object[] parameters = null)
         {
             if (cache.ContainsKey(constructor.DeclaringType))

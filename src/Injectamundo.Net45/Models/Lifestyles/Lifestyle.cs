@@ -16,8 +16,10 @@ namespace Injectamundo
 
         public string Name { get; private set; }
 
-        public abstract object GetInstance(ConstructorInfo constructor, object[] parameters = null);
+        public abstract object GetInstance(Func<object> instanceProducer);
 
+        public abstract object GetInstance(ConstructorInfo constructor, object[] parameters = null);
+        
         public static readonly Lifestyle Transient = new TransientLifestyle();
 
         public static readonly Lifestyle Singleton = new SingletonLifestyle();

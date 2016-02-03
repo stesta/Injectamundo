@@ -11,7 +11,6 @@ namespace Injectamundo.Net45.Tests
         {
             // Arrange
             var container = new Container();
-            container.Register<AlphaService, AlphaService>();
 
             // Act
             var instanceOne = container.GetInstance<AlphaService>();

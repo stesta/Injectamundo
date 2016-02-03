@@ -13,6 +13,11 @@ namespace Injectamundo
         {
         }
 
+        public override object GetInstance(Func<object> instanceProducer)
+        {
+            return instanceProducer.Invoke();
+        }
+
         public override object GetInstance(ConstructorInfo constructor, object[] parameters = null)
         {
             var dependencies = constructor.GetParameters();

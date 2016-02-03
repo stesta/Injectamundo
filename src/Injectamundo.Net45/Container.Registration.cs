@@ -14,6 +14,12 @@ namespace Injectamundo
             Register<TImplementation, TImplementation>(lifestyle);
         }
 
+        public void RegisterSingle<TImplementation>()
+            where TImplementation : class
+        {
+            Register<TImplementation, TImplementation>(Lifestyle.Singleton);
+        }
+
         public void RegisterSingle<TService, TImplementation>()
             where TImplementation : class, TService
             where TService : class
@@ -37,11 +43,24 @@ namespace Injectamundo
                 registrations.Add(registration);
             }
         }
-        
+
         public void Register<TImplementation>(Func<TImplementation> instanceProducer, Lifestyle lifestyle = null)
             where TImplementation : class
         {
             Register<TImplementation, TImplementation>(instanceProducer, lifestyle);
+        }
+
+        public void RegisterSingle<TImplementation>(Func<TImplementation> instanceProducer)
+            where TImplementation : class
+        {
+            Register<TImplementation>(instanceProducer, Lifestyle.Singleton);
+        }
+        
+        public void RegisterSingle<TService, TImplementation>(Func<TImplementation> instanceProducer)
+            where TImplementation : class, TService
+            where TService : class
+        {
+            Register<TService, TImplementation>(instanceProducer, Lifestyle.Singleton);
         }
 
         public void Register<TService, TImplementation>(Func<TImplementation> instanceProducer, Lifestyle lifestyle = null)

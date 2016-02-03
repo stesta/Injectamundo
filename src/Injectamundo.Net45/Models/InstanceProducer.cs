@@ -16,7 +16,8 @@ namespace Injectamundo
             // try to product via the specific producer
             if (registration.ImplementationProducer != null)
             {
-                return registration.ImplementationProducer.Invoke();
+                var cache = GetCachedLifestyle(registration.Lifestyle);
+                return cache.GetInstance(registration.ImplementationProducer);
             }
 
             // otherwise always try and resolve as many parameters as possible
